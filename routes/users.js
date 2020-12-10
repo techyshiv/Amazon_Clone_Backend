@@ -29,4 +29,34 @@ Router.get(
     }
 );
 
+// User Register Route
+// Access: Public
+// Url :http://localhost:500/api/users/
+Router.post(
+    "/register",
+    [
+        // Check Empty Fields
+        check('username').not().isEmpty().trim().escape(),
+        check('password').not().isEmpty().trim().escape(),
+
+        // Check Email
+        check('email').isEmail().normalizeEmail()
+    ],
+    (req,res)=>{
+        const erors = validationResult(req);
+
+        // Check whether error is not empty
+        if(!erors.isEmpty()){
+            return res.status(400).json({
+                "Status":false,
+                "Error":erors.array()
+            });
+        }
+        return res.status(200).json({
+            "Status":true,
+            "data":req.body
+        });
+    }
+);
+
 module.exports=Router;
