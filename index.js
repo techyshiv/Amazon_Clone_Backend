@@ -7,9 +7,13 @@ const morgan = require("morgan");
 const port = process.env.port;
 const database = require("./database");
 
+// user route
+const userRoute = require("./routes/users");
+
 // middleware setup
 app.use(cors());
 app.use(morgan("dev"));
+app.use("/api/users",userRoute);
 
 // route
 app.get('/',(req,res)=>{
